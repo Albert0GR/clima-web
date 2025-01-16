@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clima y Horarios del Mundo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Clima y Horarios del Mundo</h1>
+
+    <!-- Dropdown para seleccionar ciudades -->
+    <div class="dropdown">
+      <label for="city-select">Selecciona una ciudad:</label>
+      <select id="city-select">
+        <option value="" disabled selected>-- Selecciona una ciudad --</option>
+        <option value="London">London</option>
+        <option value="New York">New York</option>
+        <option value="Tokyo">Tokyo</option>
+        <option value="Mexico City">Mexico City</option>
+        <option value="Sydney">Sydney</option>
+        <option value="Paris">Paris</option>
+        <option value="Berlin">Berlin</option>
+        <option value="Moscow">Moscow</option>
+        <option value="Dubai">Dubai</option>
+        <option value="Mumbai">Mumbai</option>
+        <option value="Waterville">Waterville</option>
+      </select>
+    </div>
+
+    <!-- Contenedor de la tarjeta de datos -->
+    <div id="city-data-container">
+      <p>Selecciona una ciudad para ver los datos del clima.</p>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
