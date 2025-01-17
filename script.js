@@ -4,6 +4,13 @@ const cityDataContainer = document.getElementById('city-data-container');
 
 let intervalId; // Para almacenar el intervalo y evitar múltiples timers
 
+// Función para calcular la altitud
+function calculateAltitude(seaLevelPressure, groundPressure) {
+  const scaleFactor = 44330; // Factor de escala estándar en metros
+  const exponent = 1 / 5.255; // Exponente para la ecuación
+  return scaleFactor * (1 - Math.pow(groundPressure / seaLevelPressure, exponent));
+}
+
 // Función para iniciar el timer de la hora en tiempo real
 function startCityClock(timezoneOffset) {
   if (intervalId) {
@@ -42,8 +49,12 @@ async function fetchCityData(city) {
     // Obtener timezoneOffset en segundos
     const timezoneOffset = data.timezone;
 
-    // Obtener sea_level si está disponible
-    const seaLevel = data.main.sea_level || 'No disponible';
+    // Obtener presiones
+    const seaLevel = data.main.sea_level || data.main.pressure; // Presión al nivel del mar
+    const groundLevel = data.main.grnd_level || data.main.pressure; // Presión en el nivel actual
+
+    // Calcular la altitud sobre el nivel del mar
+    const altitude = calculateAltitude(seaLevel, groundLevel).toFixed(2);
 
     // Crear el contenido de la tarjeta
     cityDataContainer.innerHTML = `
@@ -55,6 +66,7 @@ async function fetchCityData(city) {
       <p><strong>Humedad:</strong> ${data.main.humidity}%</p>
       <p><strong>Presión:</strong> ${data.main.pressure} hPa</p>
       <p><strong>Nivel del mar:</strong> ${seaLevel} hPa</p>
+      <p><strong>Altitud sobre el nivel del mar:</strong> ${altitude} metros</p>
       <p><strong>Velocidad del viento:</strong> ${data.wind.speed} m/s</p>
       <p><strong>Zona horaria en la ciudad:</strong> UTC${timezoneOffset / 3600 > 0 ? '+' : ''}${timezoneOffset / 3600}</p>
       <p id="city-time"></p> <!-- Elemento para mostrar la hora en tiempo real -->
