@@ -18,12 +18,18 @@ function startCityClock(timezoneOffset) {
   }
 
   intervalId = setInterval(() => {
-    const utcTimestamp = new Date().getTime() - (new Date().getTimezoneOffset() * 60000); // Hora UTC en milisegundos
+    const utcTimestamp = new Date().getTime() + (new Date().getTimezoneOffset() * 60000); // Hora UTC en milisegundos
     const cityTimestamp = utcTimestamp + timezoneOffset * 1000; // Ajustar timezone en milisegundos
-    const localTime = new Date(cityTimestamp).toLocaleTimeString('es-ES', {
+
+    // Crear una nueva fecha ajustada
+    const cityDate = new Date(cityTimestamp);
+
+    // Formatear correctamente la hora local con AM/PM
+    const localTime = cityDate.toLocaleTimeString('es-ES', {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
+      hour12: true, // Cambiar a true si deseas el formato AM/PM
     });
 
     // Actualizar la hora en tiempo real en el elemento correspondiente
